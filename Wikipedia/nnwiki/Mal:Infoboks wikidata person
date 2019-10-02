@@ -1,0 +1,598 @@
+{{InfoboksNN med filter
+| name           = <!-- set v-d-e på til redigering: (vis - diskusjon - endre) -->
+| bodyclass      = biography vcard
+| bodystyle      = 
+| aboveclass     = fn org 
+| abovestyle     =background:{{#switch: {{{color|}}}{{{bgcolour|}}}{{{bgfarge|}}} | forfattar = #dadada | skodespelar = #ed8 | forskar = #ccf | filosof = #B0C4DE | kunstnar = #dddddd | {{#if:{{{bgcolour|}}}{{{color|}}}{{{bgfarge|}}} | {{{bgcolour|}}}{{{color|}}}{{{bgfarge|}}} | #ecf4fc }} }}; padding-top:0.3em; padding-bottom:0.3em; font-size:140%; line-height: 130%;
+
+|above= {{br separated entries
+ |1 = {{#if:{{{honorific-prefix|}}}|<span class="honorific-prefix" style="font-size: 77%; font-weight: normal;">{{{honorific-prefix|}}}</span>}}
+ |2 = {{#if:{{{namn|}}}|{{{namn}}} | {{#if:{{{Namn|}}}|{{{Namn}}}| <includeonly>{{PAGENAMEBASE}}</includeonly> }}}} {{#if:{{{nobelpris|}}} | <br/>[[Fil:Nobelprisen.svg|100px|link=Nobelprisen]]}}
+ |3 = {{#if:{{{tittel|}}} | <span style="font-size:77%; font-weight:normal;">{{{tittel}}}</span>}}
+ |4 = {{#if:{{{region|}}} | <span style="font-size:77%; font-weight:normal;">{{{region}}}</span>}}
+ |5 = {{#if:{{{æra|}}}{{Wikidata-emne | P2348 | q={{{q|}}} | feltnamn=æra | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}} | spraaknote=nei }}|<span style="font-size:77%; font-weight:normal;">{{Wikidata-emne | P2348 | q={{{q|}}} | ikon=nei<!-- fordi det er i overskriften --> | atskil=<br /> | feltnamn=æra | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}} | {{{æra|}}} }}</span> }}
+ |6 = {{#if:{{{honorific-suffix|}}}|<span class="honorific-suffix" style="font-size: 77%; font-weight: normal;">{{{honorific-suffix|}}}</span>}}
+}}
+
+|data1=
+|image= {{#if: {{{image|{{{bilete|{{{bilde|{{{bilete_namn|}}} }}} }}} }}}
+            | {{#invoke:InfoboxImage|InfoboxImage
+                    |image={{{bilete|{{{bilde|{{{bileta|{{{bilete_namn|}}} }}} }}} }}}
+                    |size={{{biletstorleik|{{{bildestørrelse|{{{biletstr|{{{storleik|{{{bildebredde|{{{biletstr|}}} }}} }}} }}} }}} }}} 
+                    |sizedefault=250x300px
+                    |alt={{{imagealt|}}} }}
+                 | {{Wikidata-streng | P18 | q={{{q|}}} | maks=1 | kvalifikator1=P2096 | kvalifikator2=P585 
+                    | feltnamn=bilete | wikidata={{{wikidata|}}} 
+                    | ingen_wikidata={{{ingen_wikidata|}}}
+                    | kvalifikatorformat1=    [[Fil:$1|250x300px]]
+                      [[Kategori:Side med bilete frå Wikidata med bilettekst]] 
+                      {{Nytt felt}}caption=$2
+                    | kvalifikatorformatutan1=[[Fil:$1|250x300px]] 
+                      [[Kategori:Side med bileta frå Wikidata utan bilettekst]] 
+                      {{Nytt felt}}caption=
+                    | kvalifikatorformat2= $1&nbsp;($2)
+                   }}
+                }}
+|caption={{{caption|{{{bilettekst|{{{bildetekst|{{{bilet_note|{{{imagetext|}}} }}} }}} }}} }}}
+
+| headerstyle    = background:{{#switch: {{{color|}}}{{{bgcolour|}}}{{{bgfarge|}}} | forfattar = #dadada | skodespelar = #ed8 | forskar = #ccf | filosof = #B0C4DE | kunstnar = #dddddd | {{#if:{{{bgcolour|}}}{{{color|}}}{{{bgfarge|}}} | {{{bgcolour|}}}{{{color|}}}{{{bgfarge|}}} | #ecf4fc }} }};
+| labelstyle     = vertical-align:top;
+| datastyle      = vertical-align:top;
+
+<!-- Namn - Fødsel - Død -->
+| header1 = {{#if:{{{image|{{{bilete|{{{bilde|{{{bilete_namn|}}} }}} }}} }}}
+                {{Wikidata-streng | P18 | q={{{q|}}} | feltnamn=bilete | wikidata=alle | ingen_wikidata={{{ingen_wikidata|}}} }}
+            | {{#if:{{{fødselsdato|}}}{{{fødd|}}}
+                {{Wikidata-tid | P569 | wikidata=ja | q={{{q|}}} }}
+                {{{dødsdato|}}}{{{døds_dato|}}}{{{død|}}}
+                {{Wikidata-tid | P570 | wikidata=ja | q={{{q|}}} }} | Personlig informasjon }} }}
+
+|  label2 = Verkeleg&nbsp;namn <!-- mellemrumstegnet &nbsp; er for å unngå linjeskift -->
+|   data2 = {{{verkeleg namn|{{{verkeleg_namn|{{{verkelegnamn|}}} }}} }}}
+
+|  label3 = Pseudonym
+|   data3 = {{wikidata-streng | P742  | ikon=ja | q={{{q|}}} | atskil=, 
+                | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+                | feltnamn=pseudonym             | {{{alias|{{{pseudonym|{{{pseudonym(er)|{{{Alias|}}} }}} }}} }}} }}
+
+| label5 = Fødd
+|  data5 = {{br separated entries
+             |1 = {{#if: {{{verkeleg namn|{{{verkeleg_namn|{{{verkelegnamn|}}} }}} }}}
+              | {{{fødenamn|{{{fnamn|{{{fullt_namn|{{{Fødenamn|}}} }}} }}} }}}
+              | {{Wikidata-tekst | P1477 | ikon=ja | spraak=alle | q={{{q|}}}
+                | wikidata={{{wikidata|}}}      | ingen_wikidata={{{ingen_wikidata|}}}
+                | feltnamn=fødenamn             | {{{fødenamn|{{{fnamn|{{{fullt_namn|{{{Fødenamn|}}} }}} }}} }}} }} 
+              }}
+            |2 = {{wikidata-tid | P569  | ikon=ja | q={{{q|}}}|ref=ja| maks=1 | {{{fødselsdato|{{{født|}}} }}} {{{fødselsdag|}}} }} {{#invoke:WikidataNN|alderinfo}}
+            |3 = {{#if: {{{fødselsdato|{{{fødd|{{{Fødd_den|}}} }}} }}}{{{fødselsdag|}}}{{wikidata-tid | P569 | q={{{q|}}} }}
+                | <!-- eksakt dato ikke kjent: -->
+                | {{wikidata-tid | P3150 | ikon=ja | q={{{q|}}} | wikidata={{{wikidata|}}} 
+                   | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=fødselsdag | }}
+               }}
+            |4 = {{wikidata-emne   | P19   | ikon=ja | q={{{q|}}}| maks=1 | ref=ja
+                | {{{
+
+
+|{{{fødselsstad|{{{fstad|{{{fødsels_stad|{{{Fødestad|{{{fødselsted|}}} }}} }}} }}} }}} }}} }}
+            }}
+
+| label10 = Døypt
+|  data10 = {{wikidata-tid    | P1636 | ikon=ja | q={{{q|}}}
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=døypt                   | {{{døypt_dato|{{{døypt|}}} }}} }}
+
+| label11 = Forsvunnen
+|  data11 = {{Wikidata-emne   | P746  | ikon=ja | q={{{q|}}}
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=forsvunnen            | {{{forsvunnen|}}} }}
+
+| label12 = Status
+|  data12 = {{{status|{{{forsvunnen_status|{{{forsvinningsstatus|}}} }}} }}}
+
+| label13 = Død
+|  data13 = {{br separated entries
+             |1 = {{wikidata-tid | P570  | ikon=ja | q={{{q|}}} | maks=1 | alder=P569 
+               | {{{dødsdato|{{{døds_dato|{{{død|{{{dødsdag|{{{Død_den|}}} }}} }}} }}} }}} }}
+             |2 = {{wikidata-emne | P20  | ikon=ja | q={{{q|}}} | maks=1
+               | {{{dødsstad|{{{dødstad|{{{dødestad|{{{døds_stad|{{{dstad|}}} }}} }}} }}} }}} }}
+             }}
+
+| label15 = Dødsmåte
+|  data15 = {{Wikidata-emne   | P1196 | ikon=ja | q={{{q|}}} | medstort=ja | maks=1
+               | wikidata=<!--{{{wikidata|}}}-->| ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn= dødsmåte              | {{{dødsmåte|}}} }}
+
+| label16 = Dødsårsak
+|  data16 = {{Wikidata-emne   | P509  | ikon=ja | q={{{q|}}} | medstort=ja
+               | wikidata= {{{wikidata|}}}      | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn= dødsårsak             | {{{dødsårsak|{{{Dødsårsak |}}}}}} }}
+
+| label17 = Drepen av
+|  data17 = {{Wikidata-emne   | P157  | ikon=ja | q={{{q|}}} 
+               | wikidata=<!--{{{wikidata|}}}-->| ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn= drepen av              | {{{drepen av|}}} }}
+
+| label18 = Gravlagd
+|  data18 = {{br separated entries
+              |{{wikidata-emne | P119 | ikon=ja | q={{{q|}}} 
+                | wikidata={{{wikidata|}}}      | ingen_wikidata={{{ingen_wikidata|}}}
+                | feltnamn=gravlagd             | {{{gravlagd|{{{gravstad|{{{hvilestad|{{{begravet|}}} }}} }}} }}} }}
+              |{{{gravstadkoordinater|}}} <!-- wikidata senere -->
+            }}
+<!-- status for person -->
+
+| label20 = Statsborgar&nbsp;i
+|  data20 = {{Wikidata-emne   | P27   | ikon=ja  | q={{{q|}}} | atskil=,  
+                | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+                | feltnamn=statsborgarskap       | {{{statsborgarskap|}}} 
+            }}
+
+| label21 = Nasjonalitet
+|  data21 = {{{nasjonalitet|{{{Nasjonalitet|}}}}}}
+
+| label23 = Bustad
+|  data23 = {{wikidata-emne   | P551  | ikon=ja | q={{{q|}}}
+                                                | fleirtal={{Nytt felt}}label23=Bustader
+                                                | eintal ={{Nytt felt}}label23=Bustad
+                | wikidata={{{wikidata|}}}      | ingen_wikidata={{{ingen_wikidata|}}}
+                | feltnamn=bustad                | {{{bustad|{{{residens|}}} }}} 
+              }}
+
+| label25 = Språk
+|  data25 = {{Wikidata-emne   | P1412 | ikon=ja | q={{{q|}}} | medstort=ja | ref=ja | berreurl = ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=språk                 | {{{språk|}}} }}
+
+| label26 = Høyde
+|  data26 = {{wikidata-tal    | P2048 | ikon=ja | q={{{q|}}} | ref=ja | berreurl=ja 
+               | desimaler=0 | eining=cm | visusikkerheit=nei
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=høyde                 | {{{høyde|}}} }}
+
+| label27 = Vekt 
+|  data27 = {{wikidata-tal    | P2067 | ikon=ja | q={{{q|}}} | desimaler=0 | eining=kg | ref=ja | berreurl=ja 
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=vekt                  | {{{vekt|}}} }}
+
+| label29 = Medisinsk tilstand
+|  data29 = {{Wikidata-emne   | P1050 | ikon=ja | q={{{q|}}} | medstort=ja | ref=ja | berreurl = ja
+               | wikidata=<!--{{{wikidata|}}}-->| ingen_wikidata={{{ingen_wikidata|}}} 
+               | feltnamn=medisinsk tilstand    | {{{medisinsk tilstand|{{{medisinsk_tilstand|}}} }}} }}
+
+| label30 = Religion   
+|  data30 = {{Wikidata-emne   | P140  | ikon=ja | q={{{q|}}} | medstort=ja | ref=ja | berreurl=ja 
+               | wikidata=<!-- {{{wikidata|}}} -->       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=religion                       | {{{religion|}}}{{{gudstru|}}} }}
+
+| label31 = Politisk tilhøyrsle
+|  data31 = {{{politikk|{{{politisk rørsle|}}} }}} 
+
+| label32 = Politisk&nbsp;parti
+|  data32 = {{#if: {{{politikk|}}}{{{politisk rørsle|}}}
+             |
+             |{{Wikidata-emne   | P102  | ikon=ja | q={{{q|}}} | medstort=ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=politikk               | {{{politisk parti|{{{politisk_parti|}}} }}} 
+              }}
+            }}
+
+| label33 = Embete
+|  data33 = {{{Embete|}}}
+| class33 = title
+
+| label34 = Embetsperiode
+|  data34 = {{{embetsperiode|}}}
+
+| label35 = Forgjenger
+|  data35 = {{{forgjenger|}}}
+
+| label36 = Etterfølgjar
+|  data36 = {{{etterfølgjar|}}}
+
+<!-- Familieliv -->
+
+| label37 = Foreldre       
+|  data37 = {{{foreldre|}}}
+
+| label38 = Far 
+|  data38 = {{#if: {{{foreldre|}}} 
+            |     
+            |{{Wikidata-emne   | P22   | ikon=ja | q={{{q|}}} | adskil=,  | tid=ja | berreår=ja 
+                                                 | fleirtal={{Nytt felt}}label38=Fedrar
+                                                 | eintal ={{Nytt felt}}label38=Far
+                | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+                | feltnamn=far                   | {{{far|}}} }} 
+            }}
+
+| label39 = Mor 
+|  data39 = {{#if: {{{foreldre|}}}
+            |     
+            |{{Wikidata-emne   | P25   | ikon=ja | q={{{q|}}} | adskil=,  | tid=ja | berreår=ja 
+                                                 | fleirtal={{Nytt felt}}label39=Mødrer
+                                                 | eintal={{Nytt felt}}label39=Mor
+                | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+                | feltnamn=mor                   | {{{mor|}}} }} 
+            }}
+
+| label40 = Sysken
+|  data40 = {{wikidata-emne   | P3373 | ikon=ja | q={{{q|}}} | adskil=,  | tid=ja | berreår=ja | maks=3
+                                                | fleirtal={{Nytt felt}}label40=Syskena 
+                                                | eintal={{Nytt felt}}label40=Sysken
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=sysken                | {{{sysken|{{{syskena|}}} }}} }} 
+
+| label44 = Ektefelle
+|  data44 = {{#if: {{{partnar|}}}
+             |
+             |{{wikidata-emne   | P26   | ikon=ja | q={{{q|}}} | adskil=,  | tid=ja | berreår=ja 
+                                                | fleirtal={{Nytt felt}}label44=Ektefellane 
+                                                | eintal={{Nytt felt}}label44=Ektefelle
+                                                | ingen=Blei aldri gift 
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=ektefelle             | {{{ektefelle|{{{ektefelle(r)|}}} }}} }}
+             }}
+
+| label45 = Partnar
+|  data45 = {{wikidata-emne   | P451  | ikon=ja | q={{{q|}}} | adskil=,   | tid=ja | berreår=ja 
+              | flertal={{Nytt felt}}label45=Partnarar
+              | eintal={{Nytt felt}}label45=Partnar
+              | wikidata={{{wikidata|}}}{{{partnar|}}}
+                <!-- for å unngå dupliserte opplysninger -->
+               | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=partnar               |  {{{partnar|{{{partnar(ar)|}}} }}} }}
+
+| label46 = Barn
+|  data46 = {{wikidata-emne   | P40   | ikon=ja | q={{{q|}}} | adskil=,  | tid=ja | berreår=ja | maks=3
+                                                | fleirtal={{Nytt felt}}label46=Barna 
+                                                | eintal={{Nytt felt}}label46=Barn
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=barn                  | {{{barn|}}} }}
+
+| label47 = Talet på born
+|  data47 = {{Wikidata-tal    | P1971 | ikon=ja | q={{{q|}}} | desimaler=0 | ref=ja | berreurl = ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=talet på born         | {{{tal_born|}}} }}
+
+| label48 = Familie
+|  data48 = {{wikidata-emne   | P1038 | ikon=ja | q={{{q|}}} | adskil=,  
+               | tid=ja | berreår=ja | kvalifikator1=P1039
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=familie               | {{{familie|}}} }}
+
+| label49 = Pårørende 
+|  data49 = {{{pårørende|}}}
+
+<!-- utdanning - tilsetjing - verke -->
+
+|header50 = {{#if: {{wikidata-emne | P69  | q={{{q|}}} | spraaknote=nei | maks=1 | wikidata={{{wikidata|}}} 
+                 | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=utdanningsstad }}
+             {{wikidata-emne   | P812  | q={{{q|}}} | spraaknote=nei | maks=1 | wikidata={{{wikidata|}}}
+                 | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=hovudfag }}
+                {{Wikidata-emne   | P106  | q={{{q|}}} | spraaknote=nei | maks=1 | wikidata={{{wikidata|}}}
+                 | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=arbeidsoppgåve }}
+                {{{utdanningsstad|}}} {{{mater|{{{alma_mater|{{{alma mater|}}} }}} }}} {{{utdanning|}}}
+                {{{hovudfag|}}} {{{arbeidsoppgåve|}}}  {{{elev av|{{{elev_av|{{{akademisk_rettleiar|}}} }}} }}}
+                {{{universitetsretning|}}} {{{akademisk grad |{{{grad|}}} }}} }}
+          
+
+| label51 = Felt
+|  data51 = {{{felt|}}}
+
+| label52 = Utdanningsstad
+|  data52 = {{wikidata-emne   | P69   | ikon=ja | q={{{q|}}} | maks=3 | tid=ja | ref=ja| berreår=ja | adskil=,
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=utdanningsstad       | {{{utdanningsstad|{{{mater|{{{alma_mater|{{{alma mater|}}} }}} }}} }}}{{{utdanning|}}} }}
+
+| label53 = {{#if:{{{akademisk_rettleiar|}}}|Akademisk rettleiar|Elev av}}
+|  data53 = {{Wikidata-emne   | P1066 | ikon=ja | q={{{q|}}} | maks=2 | adskil=,
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=elev av               | {{{elev av|{{{elev_av|}}} }}}{{{akademisk_rettleiar|}}} }}
+
+| label54 = Hovudfag  
+|  data54 = {{br separated entries
+            |  {{wikidata-emne   | P812  | ikon=ja | q={{{q|}}} | maks=3
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=hovudfag              | {{{hovudfag|{{{universitetsretning|}}} }}}
+               }}{{#if:{{{hovudfag|{{{universitetsretning|}}} }}}{{wikidata-emne   | P812  | q={{{q|}}} | spraaknote=nei | maks=1 | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=hovudfag }}|{{#if:{{{autodidakt|}}}|,&nbsp;| }} }} |{{#if:{{{autodidakt|}}}|{{nowrap|[[Autodidakt]]&nbsp;{{{autodidakt}}} }} }}
+            }}
+
+
+| label55 = Akademisk grad   
+|  data55 = {{wikidata-emne   | P512  | ikon=ja | q={{{q|}}} | maks=3
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=akademisk grad        | {{{akademisk grad |{{{grad|}}} }}} }}
+
+| label56 = Professorat
+|  data56 = {{wikidata-emne   | P803  | ikon=ja | q={{{q|}}} | maks=3
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=professorat         | {{{professorat|{{{professorata|}}} }}} }}
+
+| label57 = Presteembetar
+|  data57 = {{{presteembetar|{{{presteembet(ar)|}}}}}}
+
+| label58 = {{#if: {{{Institusjon|}}} | Institusjon | Knytt til }} <!--bokmål: Tilknyttet -->
+|  data58 = {{wikidata-emne   | P1416 | ikon=ja | q={{{q|}}} | maks=3 | tid=ja | berreår=ja 
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=institusjon            | {{{institusjon|}}} {{{knytt til|}}} }}
+
+| label59 = Medlem&nbsp;av   
+|  data59 = {{wikidata-emne   | P463  | ikon=ja | q={{{q|}}} | maks=3 | tid=ja | ref=ja | berreår=ja | adskil=,
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=medlem av             | {{{medlem|}}} {{{medlem av|}}}}}
+
+| label60 = Yrke
+|  data60 = {{{yrke|}}}
+
+| label61 = Sysselsetjing <!-- Bokmål: beskjeftigelse. Vrien å oversette. Kan ikke hete yrke -->
+|  data61 = {{#if: {{{sysselsetjing|}}}
+             |
+             |{{Wikidata-emne   | P106  | ikon=ja | q={{{q|}}} | maks=5 | tid=ja | berreår=ja  | medstort=ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=sysselsetjing         | {{{sysselsetjing|}}}{{{arbeid|}}} 
+              }}
+            }}
+<!-- Forskingsprosjekt -->
+
+| label70 = {{#if:{{{forskingsprosjekt|}}}{{{prosjekt|}}}|forskingsprosjekt|Fagprosjekt}}
+|  data70 = {{#if:{{{interesse|}}}|{{{prosjekt|{{{forskingsprosjekt|}}} }}}|
+             {{wikidata-emne   | P101  | ikon=ja | q={{{q|}}} | maks=3 | medstort=ja
+              | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+              | feltnamn=fagprosjekt 
+              | {{{arbeidsfelt |{{{fagprosjekt| }}} }}}{{{prosjekt|{{{forskingsprosjekt|}}} }}} }}
+            }}
+
+| label71 = Fagleg&nbsp;interesse
+|  data71 = {{wikidata-emne   | P2650 | ikon=ja | q={{{q|}}} | maks=3 | medstort=ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=fagleg interesse      | {{{interesse|}}} }}
+
+| label72 = Aktive&nbsp;år      
+|  data72 = {{wikidata-emne   | P1317 | ikon=ja | q={{{q|}}} | adskil=, 
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=aktive år             | {{{aktive_år|{{{aktive år|{{{aktiveår|}}} }}} }}} }}
+
+| label73 = Periode
+|  data73 = {{{periode|}}}
+
+| label74 = Deltok&nbsp;i      
+|  data74 = {{wikidata-emne   | P1344 | ikon=ja | q={{{q|}}} | maks=3 | tid=ja | berreår=ja | adskil=, 
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=deltok i              | {{{deltok|{{{deltok i|}}} }}} }}
+
+| label75 = Arbeidsgjevar
+|  data75 = {{Wikidata-emne   | P108  | ikon=ja | q={{{q|}}} | tid=ja | ref=ja | berreår=ja | medstort=ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=arbeidsgjevar          | {{{arbeidsgjevar|}}} }}
+
+| label76 = Arbeidsstad
+|  data76 = {{Wikidata-emne   | P937  | ikon=ja | q={{{q|}}} | adskil=, | tid=ja | berreår=ja | maks=3
+                                                | fleirtal={{Nytt felt}}label76=Arbeidsstader
+                                                | eintal={{Nytt felt}}label76=Arbeidsstad
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=arbeidsstad           | {{{arbeidsplass|{{{arbeidsstad|}}} }}} }}
+
+| label77 = Elevar
+|  data77 = {{Wikidata-emne   | P802  | ikon=ja | q={{{q|}}} | maks=3
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=elevar | {{{elevar|}}} }}
+
+| label78 = Tydingsfull&nbsp;elevar
+|  data78 = {{{tydingsfull_elevar|}}}
+
+| label79 = Lønn 
+|  data79 = {{{lønn|}}}
+
+| label80 = Kjend&nbsp;for
+|  data80 = {{{kjendfor|}}}{{{kjend_for|}}}
+
+| label81 = Berømt&nbsp;for
+|  data81 = {{{berømtfor|}}}
+
+| label82 = Kjende&nbsp;verk 
+|  data82 = {{Wikidata-emne   | P800  | ikon=ja | q={{{q|}}} | maks=3 | tid=ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=kjende verk      | {{{kjende_verk|{{{kjend(e) verk| }}} }}} }}
+
+| label83 = {{#if:{{{meisterverk|}}}|Meisterverk|meisterverka}}
+|  data83 = {{{meisterverk|{{{meisterverka|}}} }}}{{#if:{{{meisterverk_utgjevingår|{{{meisterverka_utgjevingår|}}} }}}|<small>'' ({{{meisterverk_utgjevingår|{{{meisterverka_utgjevingår|}}} }}})''</small>}}        
+
+| label85 = kjende&nbsp;rollar
+|  data85 = {{Wikidata-emne   | P453  | ikon=ja | q={{{q|}}} | maks=3 | tid=ja 
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=kjende rollar         | {{{framsyning|{{{kjende rollar|{{{kjende_rollar|}}} }}} }}} }}
+
+| label86 = Bibliografi
+|  data86 = {{Wikidata-emne   | P1455 | ikon=ja | q={{{q|}}} | maks=3 | tid=ja
+               | wikidata=<!--{{{wikidata|}}}-->| ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=bibliografi           | {{{bibliografi|}}} }}
+
+| label87 = Filmografi
+|  data87 = {{Wikidata-emne   | P1283 | ikon=ja | q={{{q|}}} | maks=3 | tid=ja
+               | wikidata=<!--{{{wikidata|}}}-->| ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=filmografi            | {{{filmografi|}}} }}
+
+| label88 = Sjanger
+|  data88 = {{Wikidata-emne   | P136  | ikon=ja | q={{{q|}}} | maks=4 | medstort=ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=sjanger                 | {{{sjanger|{{{sjangr(ar)|{{{sjangrar |}}} }}} }}} }}
+
+| label91 = Nettoformue
+|  data91 = {{Wikidata-tal    | P2220 | ikon=ja | q={{{q|}}} | desimaler=2 | ref=ja | berreurl = ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=nettoformue                | {{{formue|}}} }}
+
+<!-- nominasjoner, priser og underholdnings priser -->
+| label92 = Påverka av  
+|  data92 = {{Wikidata-emne   | P737  | ikon=ja | q={{{q|}}} | maks=5 | medstort=ja
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=påverka av            | {{{påverka av|{{{påverka_av|{{{innverknad_av|{{{inspirasjon|}}} }}} }}} }}} }}
+
+| label93 = Har påverka 
+|  data93 = {{{har påverka|{{{har_påverka|{{{innverknad_på|{{{påverke|}}} }}} }}} }}}
+
+| label94 = Tydingsfulle idéar
+|  data94 = {{{tydingsfulle idéar|{{{tydingsfulle_idéar|}}} }}}
+
+<!-- Kunstnarar -->
+| label100 = Inspirert av 
+|  data100 = {{Wikidata-emne   | P941  | ikon=ja | q={{{q|}}} | maks=5
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=inspirert av          | {{{inspirert av|{{{inspirert_av|}}} }}} }}
+
+| label101 = Inspirerende
+|  data101 = {{{inspirerende|}}}
+
+| label102 = Utstilling
+|  data102 = {{{utstilling|}}}
+
+| label103 = Offentleg
+|  data103 = {{{offentleg|}}}
+
+| label104 = Innkjøp
+|  data104 = {{{innkjøp|}}}
+
+| label105 = Høgste auksjonspris
+|  data105 = {{{høgste_auksjonspris|}}}
+
+|header110 = {{#if: {{Wikidata-emne   | P1411 | q={{{q|}}} | spraaknote=nei | maks=1 
+                     | wikidata=<!--{{{wikidata|}}}-->
+                     | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=utmerkingar }} 
+                   {{Wikidata-emne   | P166 | q={{{q|}}} | spraaknote=nei | maks=1 
+                     | wikidata={{{wikidata|}}}
+                     | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=utmerking }}
+                   {{Wikidata-emne   | P1686 | q={{{q|}}} | spraaknote=nei | maks=1 
+                     | wikidata={{{wikidata|}}}
+                     | ingen_wikidata={{{ingen_wikidata|}}}| feltnamn=hedra for}}
+                   {{{utmerkingar|}}}{{{utmerking|}}}{{{hedra for|}}}{{{prisar|}}}{{{utmerkelsar|}}}
+                   {{{nobelpris|}}}{{{Pris|}}}{{{nobelår|}}}
+                   {{{oscarprisar|}}}{{{emmyprisar|}}}{{{tonyprisar|}}}{{{goldenglobeprisar|}}}{{{baftaprisar|}}}{{{people's choice prisar|}}}{{{fagprisar|}}}{{{cesarprisar|}}}{{{goyaprisar|}}}{{{afiprisar|}}}{{{filmfareprisar|}}}{{{infaprisar|}}}{{{olivierprisar|}}}{{{geminiprisar|}}}{{{grammyprisar|}}}{{{Screen Actors Guild|}}}{{{teenchoiceadwardsprisar|}}}{{{bodilprisar|}}}{{{robertprisar|}}}
+                    | Utmerkingar og prisar }}
+
+| label111 = Nominasjonar
+|  data111 = {{Wikidata-emne   | P1411 | ikon=ja | q={{{q|}}} | maks=4 | tid=ja | medstort=ja | adskil=, 
+               | wikidata=<!--{{{wikidata|}}}-->      | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=nominasjonar          | {{{nominasjonar|}}} }}
+
+| label112 = Utmerking  
+|  data112 = {{Wikidata-emne   | P166  | ikon=ja | q={{{q|}}} | maks=4 | tid=ja | medstort=ja | adskil=, 
+                                                | fleirtal={{Nytt felt}}label112=Utmerkingar
+                                                | eintal={{Nytt felt}}label112=Utmerking
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=utmerking             | {{{heder|{{{prisar|{{{utmerking|}}} }}} }}} }}
+
+| label113 = Hedra for 
+|  data113 = {{Wikidata-emne   | P1686 | ikon=ja | q={{{q|}}} | maks=3 | tid=ja | medstort=ja | adskil=, 
+               | wikidata={{{wikidata|}}}       | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=hedra for            | {{{hedra for|}}} }}
+
+| label114 = Nobelpris
+|  data114 = {{#if:{{{nobeltype|}}}{{{Pris|}}}{{{nobelår|}}}|[[Fil:Nobel prize medal.svg|15px|link=Nobelprisen]]&nbsp; {{{Pris|}}}{{{nobeltype|}}} {{{År|}}}{{{nobelår|}}} |}}
+
+| label115 = [[Oscaruddelingen|Oscars]]
+|  data115 = {{{oscarpriser|}}}
+
+<!-- Fleire? -->
+
+<!-- infoboks seriemordar -->
+|header140 = {{#if: {{wikidata-tal | P1345 | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=tal_ofre }}
+<!-- {{wikidata-emne | P1317 | spraaknote=nei | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=periode }} --> {{{tal_ofre|}}} {{{Ofre|}}} {{{Ofrar|}}} {{{Offer|}}} {{{lovbrot|}}} {{{periode|}}} {{{land|}}} {{{arrestert|}}} {{{fengsla_i|}}} {{{straff|}}} {{{kriminel_status|}}} {{{sikting|}}} {{{skulda|}}} {{{benåda|}}} {{{lauslate|}}} | kriminalitet }}
+
+| label141 = Tal ofre      
+|  data141 = {{Wikidata-tal | P1345 | ikon=ja | desimaler=2
+               | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=tal_ofre | {{{tal_ofre|}}} }}
+
+| label142 = {{#if:{{{ofrar|}}} | ofrar | {{#if:{{{Offer|}}} | Offer }} }}
+|  data142 = {{{Ofre|}}}{{{Offer|}}}
+
+| label143 = Lovbrot
+|  data143 = {{{lovbrot|}}}
+
+| label144 = Periode
+|  data144 = {{{periode|}}}<!-- {{wikidata-emne | P1317 | ikon=ja | adskil=<br />
+               | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=periode | {{{periode|}}} }} -->
+
+| label145 = Land
+|  data145 = {{{land|}}}
+
+| label146 = Arrestert
+|  data146 = {{{arrestert|}}}
+
+| label147 = Sikting
+|  data147 = {{{sikting|}}}
+
+| label148 = Skulda
+|  data148 = {{{skulda|}}}
+
+| label149 = Straff
+|  data149 = {{{straff|}}}
+
+| label150 = Status
+|  data150 = {{{kriminel_status|}}}
+| class150 = category
+
+| label151 = Fengsla i
+|  data151 = {{wikidata-emne | P2632 | ikon=ja
+               | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}}
+               | feltnamn=fengsla i | {{{fengsla_i|}}} }}
+
+| label152 = Benåda
+|  data152 = {{{benåda|}}}
+
+| label153 = Lauslate
+|  data153 = {{{lauslate|}}}
+
+|  data154 = {{{misc|{{{module|}}}}}}
+|  data155 = {{{misc2|{{{module2|}}}}}}
+|  data156 = {{{misc3|{{{module3|}}}}}}
+
+|header160 = {{#if: {{{signatur|}}} {{wikidata-streng | P109 | q={{{q|}}} | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=signatur }}
+              | Signatur 
+             }}
+
+|  data161 = {{#invoke:InfoboxImage|InfoboxImage
+               |image= {{#if: {{{signatur|}}} | {{{signatur}}} | {{wikidata-streng | P109 | q={{{q|}}} | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=signatur }} }}
+               |size={{{signaturstorleik|{{{signaturstørrelse|}}}}}}   <!-- |sizedefault=150x150px --> |frameless |upright=0.75 
+               |alt={{main other |{{genitiv|{{PAGENAMEBASE}}}} signatur |center=yes }} }}
+
+|header162 = {{#if:{{{signatur|{{#statements:P109}} }}}||{{#if: {{{logo|}}} {{wikidata-streng | P154 | q={{{q|}}} | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=logo }}
+              | Logo 
+             }} }}
+
+|  data163 = {{#if:{{{signatur|{{#statements:P109}} }}}||{{#invoke:InfoboxImage|InfoboxImage
+               |image= {{#if: {{{logo|}}} | {{{logo}}} | {{wikidata-streng | P154 | q={{{q|}}} | wikidata={{{wikidata|}}} | ingen_wikidata={{{ingen_wikidata|}}} | feltnamn=logo }} }}
+               |size={{{logostorleik|{{{logostørrelse|}}}}}}   <!-- |sizedefault=150x150px --> |frameless |upright=0.75 
+               |alt={{main other |{{genitiv|{{PAGENAMEBASE}}}} logo |center=yes }} }} }}
+
+
+<!----------Eksterne tilvisingar---------->
+
+|  label164 = Beskrive i
+|   data164 = {{Wikidata-emne   | P1343 | ikon=ja | q={{{q|}}} | maks=10 | adskil=<br />
+                | wikidata=<!--{{{wikidata|}}}-->| ingen_wikidata={{{ingen_wikidata|}}}
+                | feltnamn=beskrive             | {{{beskrive|}}} }}
+
+| header165 = {{#if: {{{fotnote|}}}{{{notar|}}}{{{ei anna|}}} | Ei anna }}
+|   data166 = {{{fotnotar|}}}{{{notar|}}}{{{anna|}}} <!-- parametrene er synonymer -->
+
+|  data167  = {{{misc4|{{{module4|}}}}}}
+|  data168  = {{{misc5|{{{module5|}}}}}}
+|  data169  = {{{misc6|{{{module6|}}}}}}
+
+
+|belowstyle = border-top: 1px solid #aaa; line-height: 1.5em
+<!-- vises kun om "blyant" er brukt -->
+|below      = {{#if: {{{wikidata|}}} 
+                  {{#ifexpr: {{#if: {{wikidata-tid | P569 | q={{{q|}}} }} | 1 | 0 }} and not {{#if: {{{fødselsdato|}}}{{{fødd|}}}{{{fødselsdag|}}} | 1 | 0 }} | WD er brukt | }}
+                  {{#ifexpr: {{#if: {{wikidata-emne | P19 | q={{{q|}}} | spraaknote=nei }} | 1 | 0 }} and not {{#if: {{{fødestad|}}}{{{fødselsstad|}}}{{{fsted|}}}{{{fødsels_stad|}}} | 1 | 0 }} | WD er brukt | }}
+                  {{#ifexpr: {{#if: {{wikidata-tid | P570 | q={{{q|}}} }} | 1 | 0 }} and not {{#if: {{{dødsdato|}}}{{{døds_dato|}}}{{{død|{{{dødsdag|}}} }}} | 1 | 0 }} | WD er brukt | }}
+                  {{#ifexpr: {{#if: {{wikidata-emne | P20 | q={{{q|}}} | spraaknote=nei }} | 1 | 0 }} and not {{#if: {{{dødsstad|}}}{{{dødstad|}}}{{{dødestad|}}}{{{døds_stad|}}}{{{dstad|}}} | 1 | 0 }} | WD er brukt | }}
+                   | {{Infoboks below-tekst | q={{{q|}}} }} | }}
+<!-- Auto-kat -->
+    {{main other |{{#if:{{#statements:P569}}|[[Kategori:Fødde den {{#invoke:WikidataDato | dagOgMaaned |pv=P569}}]] [[Kategori:Fødde i {{#invoke:WikidataDato | Aar |pv=P569}}]]| }} }}
+    {{main other |{{#if:{{#statements:P570}}|[[Kategori:Døde den {{#invoke:WikidataDato | dagOgMaaned |pv=P570}}]] [[Kategori:Døde i {{#invoke:WikidataDato | Aar|pv=P570}}]]| }} }}
+
+}}<includeonly>
+<!-- Bedre med LUA??? -->
+{{#if:{{{intro|}}}|{{#if:{{#statements:P1477}}|'''{{#statements:P1477}}'''|}} {{#if:{{#invoke:WikidataDato | Aar |pv=P569}}|(fødd {{#if:{{#invoke:WikidataDato | dagOgMaaned |pv=P569}}|[[{{#invoke:WikidataDato | dagOgMaaned |pv=P569}}]] |}} {{#if:{{#invoke:WikidataDato | Aar |pv=P569}}| [[{{#invoke:WikidataDato | Aar |pv=P569}}]] |}} }}{{#if:{{#invoke:WikidataDato | Aar|pv=P570}}|, død {{#if:{{#invoke:WikidataDato | dagOgMaaned |pv=P570}}|[[{{#invoke:WikidataDato | dagOgMaaned |pv=P570}}]]| }} {{#if:{{#invoke:WikidataDato | Aar|pv=P570}}|[[{{#invoke:WikidataDato | Aar|pv=P570}}]]| }} }}) }}
