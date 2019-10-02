@@ -11,7 +11,7 @@ import time
 
 # constant values.
 BASE_URL = "https://api.genius.com"
-CLIENT_ACCESS_TOKEN = "PnY7WjgobX5WPZh5NG-3sdAn5L0Mzj2O1_9LSQZaZgdS0O3rZu4jaB0KWifI5p23"
+CLIENT_ACCESS_TOKEN = "XXXXXXXXXXX"
         
 def _get(path, params=None, headers=None):
 
