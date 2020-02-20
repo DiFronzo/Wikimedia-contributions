@@ -66,11 +66,14 @@ function p.tabell(frame)
 		end
 		tbl:node(row)
 	end
-	tbl
-		:tag('tr'):done()
-			:tag('td')
-				:attr('colspan', 16)
-					:wikitext('Alle rader med unntak av "nr." og "kommune" er i enheten km². Basert på data hentet fra [[Kartverket]].' .. getRef(frame)):done()
+	tbl:tag('tr')
+		:addClass('sortbottom')
+		:tag('td')
+			:attr('colspan', 16)
+			:wikitext('Alle rader med unntak av "nr." og "kommune" er i enheten km². Basert på data hentet fra [[Kartverket]].' .. getRef(frame)):done()
+--	local html = tostring(tbl)
+--	local dumphtml = require('Module:Dump')._dumphtml
+--	return dumphtml(html)
 	return tostring(tbl)
 end
 
@@ -78,7 +81,18 @@ function p.innbprkm(frame)
 	local args = getArgs(frame)
 	local knr = tonumber(args['knr']) or tonumber(args[1])
 	local innb = tonumber(args['innb']) or tonumber(args[2])
-	return  mw.language.getContentLanguage():formatNum(round(innb/tonumber(data['kommune'][knr]['landareal']),2)) .. ' innb./km²' .. getRef(frame)
+	local unit = ''
+	local ref = ''
+	
+	for nr, val in pairs(args) do
+		if string.lower(val) == 'enhet' then
+			unit = ' <small>innb./km²</small>'
+		elseif string.lower(val) == 'ref' then
+			ref = getRef(frame)
+		end
+	end
+	
+	return  mw.language.getContentLanguage():formatNum(round(innb/tonumber(data['kommune'][knr]['landareal']),2)) .. unit .. ref
 end
 
 function p.main(frame)
