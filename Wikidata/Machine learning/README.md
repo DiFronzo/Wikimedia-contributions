@@ -22,7 +22,49 @@ from sklearn import linear_model
 
 Now it's time for some data collection from Wikidata. For this example have I used the yearly (average) population stacked by country in a query. This gives us a lot of interesting values and some with faults, unfortunately. I have chosen to filter this query to only include values from 2005 and newer. How you choose to import the query into the script is your decision. A passibility is to [iterate over a SPARQL query](Wikidata:Pywikibot_-_Python_3_Tutorial/Iterate_over_a_SPARQL_query "wikilink") by downloading the `.rq` file or just download a [JSON](W:JSON "wikilink") file of the result from the query.wikidata.org site. Once you've downloaded the data set and placed it into your main directory you will first need to clean the data, and later load it in using the pandas module.
 
-Yearly Population stacked by country  
+Yearly Population stacked by country
+``` SPARQL
+# male/female population _must_ not be added unqualified as total population (!)
+# this is an error and should be fixed at the item using P1540 and P1539 instead
+# (wrong query result may be a manifestation of such)
+SELECT ?year (AVG(?pop) AS ?population) ?countryLabel
+WHERE
+{
+  ?country wdt:P31 wd:Q6256;
+           p:P1082 ?popStatement .
+  ?popStatement ps:P1082 ?pop;
+                pq:P585 ?date .
+  BIND(STR(YEAR(?date)) AS ?year)
+  
+  # IF multiple ?pop values per country per year exist, we prioritize by source
+  #       census 1st, others 2nd, estimation(s) 3rd, unknown sources (none supplies P459) last
+  # note: wikibase:rank won't help here: each year may have multiple statements for ?pop value
+  #       rank:prefered is used for the best value (or values) of the latest or current year
+  #       rank:normal may be justified for all of multiple ?pop values for a given year
+  OPTIONAL { ?popStatement pq:P459 ?method. }
+  OPTIONAL { ?country p:P1082 [ pq:P585 ?d; pq:P459 ?estimate ].
+             FILTER(STR(YEAR(?d)) = ?year). FILTER(?estimate = wd:Q791801). }
+  OPTIONAL { ?country p:P1082 [ pq:P585 ?e; pq:P459 ?census ].
+             FILTER(STR(YEAR(?e)) = ?year). FILTER(?census = wd:Q39825). }
+  OPTIONAL { ?country p:P1082 [ pq:P585 ?f; pq:P459 ?other ].
+             FILTER(STR(YEAR(?f)) = ?year). FILTER(?other != wd:Q39825 && ?other != wd:Q791801). }
+  BIND(COALESCE( 
+    IF(BOUND(?census), ?census, 1/0),
+    IF(BOUND(?other), ?other, 1/0),
+    IF(BOUND(?estimate), ?estimate, 1/0) ) AS ?pref_method).
+  FILTER(IF(BOUND(?pref_method),?method = ?pref_method,true))
+  # .. still need to group if multiple values per country per year exist and
+  # - none is qualified with P459
+  # - multiple ?estimate or multiple ?census (>1 value from same source)
+  # - ?other yields more than one source (>1 values are better than optionally
+  #                         supplied estimate, but no census source available)
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" }       
+  FILTER(?year >= "2005")
+}
+GROUP BY ?year ?countryLabel
+ORDER BY ?year ?countryLabel
+```
 
 Query found on [Wikidata:SPARQL query service/queries/examples/advanced](Wikidata:SPARQL_query_service/queries/examples/advanced "wikilink") (shout-out to the person who made it, saved me a lot of time).
 
