@@ -1,4 +1,4 @@
-<sup> Copy of [Machine learning with Wikidata](https://www.wikidata.org/wiki/Wikidata:Pywikibot_-_Python_3_Tutorial/Machine_learning_with_Wikidata#Full_code). </sup>
+<sup> Copy of [Machine learning with Wikidata](https://www.wikidata.org/wiki/Wikidata:Pywikibot_-_Python_3_Tutorial/Machine_learning_with_Wikidata). </sup>
 
 Linear regression
 -----------------
@@ -70,6 +70,9 @@ ORDER BY ?year ?countryLabel
 
 Query found on [Wikidata:SPARQL query service/queries/examples/advanced](Wikidata:SPARQL_query_service/queries/examples/advanced "wikilink") (shout-out to the person who made it, saved me a lot of time).
 
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Yearly_Population_stacked_by_country_%28Wikidata%29.svg/1000px-Yearly_Population_stacked_by_country_%28Wikidata%29.svg.png?sanitize=true">
+Visualization of the SPARQL query. [SVG](https://commons.wikimedia.org/wiki/File:Yearly_Population_stacked_by_country_(Wikidata).svg) [CC-0](https://creativecommons.org/share-your-work/public-domain/cc0/)
+
 Now that we have cleaned the data and selected the interesting part of the query (country, year and population). We need to import the data into `pandas`. We also need (in this example) to flip the table (switch the place of column and row).
 
 ``` python
@@ -100,8 +103,6 @@ for country in allEntries:
 df = pd.DataFrame.from_dict(selectedEnt) # pastes it into pandas
 data = pd.DataFrame.transpose(df) # flips the table
 ```
-
-![Scikit-learn is used in this tutorial.](Scikit learn logo small.svg "Scikit-learn is used in this tutorial.")
 
 The data should now look something like this: `print(data)`
 
@@ -186,14 +187,13 @@ for x in range(len(predictions)):
      [ 0.41969474 -1.01050159 -0.20560013  0.0411049   1.3388236   0.41479332]
     Intercept: 
      36691.20709852874
-
-| Country   | [Sklearn](W:scikit-learn "wikilink") guessed value for 2013 | The Wikidata values (2007-2012) | The Wikidata value (2013) |
-|-----------|-------------------------------------------------------------|---------------------------------|---------------------------|
-| Bhutan    | 791284.6964912245                                           | 679365	692159	704542	716939	729429	741822                        | 692159                    |
-| Palau     | 57549.30744685472                                           | 20118	20228	20344	20470	20606	20754                           | 20228                     |
-| Venezuela | 30466443.18175283                                           | 27655937	28120312	28583040	29043283	29500625	29954782	                        | 28120312                  |
-| Romania   | 19986225.906004228                                          | 20882982	20537875	20367487	20246871	20147528	20058035                        | 20537875                  |
-| Uruguay   | 3439645.730278643                                           | 3338384	3348898	3360431	3371982	3383486	3395253                         | 3348898                   |
+|  Country  | sklearn guessed value for 2013 | The Wikidata values (2007) | The Wikidata values (2008) | The Wikidata values (2009) | The Wikidata values (2010) | The Wikidata values (2011) | The Wikidata values (2012) | The Wikidata value (2013) |
+|:---------:|:------------------------------:|:--------------------------:|:--------------------------:|:--------------------------:|:--------------------------:|:--------------------------:|:--------------------------:|:-------------------------:|
+|   Bhutan  |            791284.69           |           679365           |           692159           |           704542           |           716939           |           729429           |           741822           |           753947          |
+|   Palau   |            57549.30            |            20118           |            20228           |            20344           |            20470           |            20606           |            20754           |           20918           |
+| Venezuela |           30466443.18          |          27655937          |          28120312          |          28583040          |          29043283          |          29500625          |          29954782          |          30405207         |
+|  Romania  |           19986225.90          |          20882982          |          20537875          |          20367487          |          20246871          |          20147528          |          20058035          |          19981358         |
+|  Uruguay  |           3439645.73           |           3338384          |           3348898          |           3360431          |           3371982          |           3383486          |           3395253          |          3407062          |
 | ..        | ..                                                          | ..                              | ..                        |
 
 ### Full code
