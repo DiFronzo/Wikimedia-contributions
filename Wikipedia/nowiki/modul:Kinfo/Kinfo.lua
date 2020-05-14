@@ -4,6 +4,49 @@ local getArgs = require('Module:Arguments').getArgs
 
 local p = {}
 
+function p.kBefolkning(frame)
+	local args = getArgs(frame)
+	
+	local knr = tonumber(wd._egenskaper{'rå','fremtid','nåværende','normal+','best','P2504'}) or 0
+	
+	for nr, val in pairs(args) do
+		if string.lower(val) == 'aar' then
+			if knr == 0 then
+				local qid = mw.wikibase.getEntityIdForTitle( mw.title.getCurrentTitle().text .. ' kommune',"nnwiki" )
+				return tonumber(frame:callParserFunction{ name = '#time:Y', args =  wd._kvalifikator{'rå','enkel',qid,'P1082','P585'} })
+			else
+				return tonumber(frame:callParserFunction{ name = '#time:Y', args =  wd._kvalifikator{'rå','enkel','P1082','P585'} })
+			end
+		end
+	end
+	
+	if knr == 0 then
+		local qid = mw.wikibase.getEntityIdForTitle( mw.title.getCurrentTitle().text .. ' kommune',"nnwiki" )
+		if qid then
+			return tonumber(wd._egenskap{'rå','nåværende',qid,'P1082'}) .. wd._referanser{'nåværende','enkel',qid,'P1082'} or ""
+		else
+			return ""
+		end
+	else
+		return tonumber(wd._egenskap{'rå','nåværende','P1082'}).. wd._referanser{'nåværende','enkel','P1082'}  or ""
+	end
+end
+
+function p.knr(frame)
+	local knr = tonumber(wd._egenskaper{'rå','fremtid','nåværende','normal+','best','P2504'}) or 0
+	
+	if knr == 0 then
+		local qid = mw.wikibase.getEntityIdForTitle( mw.title.getCurrentTitle().text .. ' kommune',"nnwiki" )
+		knr = tonumber(wd._egenskaper{'rå','fremtid','nåværende','normal+','best',qid,'P2504'}) or 0
+	end
+	
+	if knr == 0 then
+		return ""
+	end
+	
+	return knr
+end
+
 local function getRef(frame, definition)
 	if definition == "landareal" or definition == "ferskvatn" then
 		return frame:callParserFunction{ name = '#tag:ref', args = {
@@ -21,14 +64,6 @@ local function tablelength(T)
   local count = 0
   for _ in pairs(T) do count = count + 1 end
   return count
-end
-
-local function sumvann(num1,instans)
-	if pcall(function() return data[instans][num1]['innsjo'] end) and pcall(function() return data[instans][num1]['elvtorrfall'] end) then
-		return tonumber(data[instans][num1]['innsjo']+data[instans][num1]['elvtorrfall'])
-	else
-		error("Not a valid kommunenummer in the list")
-	end
 end
 
 local function round(num, numDecimalPlaces)
@@ -124,7 +159,12 @@ function p.innbprkm(frame)
 	elseif pcall(function() return data['fylke'][knr]['landareal'] end) and innb then
 		return mw.language.getContentLanguage():formatNum(round(innb/tonumber(data['fylke'][knr]['landareal']),2)) .. unit .. ref
 	else
-		local qid = mw.wikibase.getEntityIdForTitle( data['kommune'][knr]['kommune'] .. ' kommune',"nnwiki" )
+		local qid = ""
+		if knr ~= 0 and pcall(function() return data['kommune'][knr]['kommune'] end) then
+			qid = mw.wikibase.getEntityIdForTitle( data['kommune'][knr]['kommune']  .. ' kommune',"nnwiki" )
+		else
+			qid = mw.wikibase.getEntityIdForTitle( mw.title.getCurrentTitle().text .. ' kommune',"nnwiki" )
+		end
 		knr = tonumber(wd._egenskaper{'rå','fremtid','nåværende','normal+','best',qid,'P2504'})
 		innb = tonumber(wd._egenskap{'rå','nåværende','best',qid,'P1082'})
 
@@ -153,9 +193,13 @@ function p.main(frame)
 				ref = getRef(frame)
 			end
 		elseif string.lower(val) == 'wd' then
-			nr = tonumber(wd._egenskaper{'rå','fremtid','nåværende','normal+','best','P2504'})
-			if not nr or nr == '' then
-				nr = tonumber(string.match(wd._egenskaper{'rå','fremtid','nåværende','normal+','best','P300'}, "%d+"))
+			nr = tonumber(wd._egenskaper{'rå','fremtid','nåværende','normal+','best','P2504'}) or 0
+			if nr == 0 then --Fylke
+				nr = tonumber(string.match(wd._egenskaper{'rå','fremtid','nåværende','normal+','best','P300'}, "%d+")) or 0
+			end
+			if nr == 0 then
+				qid = mw.wikibase.getEntityIdForTitle( mw.title.getCurrentTitle().text  .. ' kommune',"nnwiki" )
+				nr = tonumber(wd._egenskaper{'rå','fremtid','nåværende','normal+','best',qid,'P2504'})
 			end
 		end
 	end
@@ -171,28 +215,30 @@ function p.main(frame)
 	end
 	
 	if nr <= 54 and nr >= 3 then
-		if verdi == "vann" then
-			return mw.language.getContentLanguage():formatNum(tonumber(sumvann(nr, 'fylke'))) .. unit .. ref
-		end
 		if pcall(function() return data['fylke'][nr][verdi] end) then
 			if type(tonumber(data['fylke'][nr][verdi])) == "number" then
 				return mw.language.getContentLanguage():formatNum(tonumber(data['fylke'][nr][verdi])) .. unit .. ref
 			else
-				return data['fylke'][nr][verdi] .. unit .. ref
+				if data['fylke'][nr][verdi] then
+					return data['fylke'][nr][verdi] .. unit .. ref
+				else
+					return ""
+				end
 			end
 		else  
 			error("Not a valid fylkenummer in the list")
 		end 
 	end
 	
-	if verdi == "vann" then
-		return mw.language.getContentLanguage():formatNum(tonumber(sumvann(nr, 'kommune'))) .. unit .. ref
-	end
 	if pcall(function() return data['kommune'][nr][verdi] end) then
 		if type(tonumber(data['kommune'][nr][verdi])) == "number" then
 			return mw.language.getContentLanguage():formatNum(tonumber(data['kommune'][nr][verdi])) .. unit .. ref
 		else
-			return data['kommune'][nr][verdi] .. unit .. ref
+			if data['kommune'][nr][verdi] then
+				return data['kommune'][nr][verdi] .. unit .. ref
+			else
+				return ""
+			end
 		end
 	else  
 		error("Not a valid kommunenummer in the list")
