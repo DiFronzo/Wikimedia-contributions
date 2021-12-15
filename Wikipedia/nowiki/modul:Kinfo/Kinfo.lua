@@ -1,10 +1,10 @@
-local wd = require('Module:Wd')
+local wd = require('Module:Wd-norsk')
 local data = mw.loadData("Modul:Kinfo/data")
 local getArgs = require('Module:Arguments').getArgs
 
 local p = {}
 
-function p.kBefolkning(frame)
+function p.kBefolkning(frame) -- TODO! Get population based on date insted of preferred value.
 	local args = getArgs(frame)
 	
 	local knr = tonumber(wd._egenskaper{'rå','fremtid','nåværende','normal+','best','P2504'}) or 0
@@ -23,12 +23,13 @@ function p.kBefolkning(frame)
 	if knr == 0 then
 		local qid = mw.wikibase.getEntityIdForTitle( mw.title.getCurrentTitle().text .. ' kommune',"nnwiki" )
 		if qid then
-			return tonumber(wd._egenskap{'rå','nåværende',qid,'P1082'}) .. wd._referanser{'nåværende','enkel',qid,'P1082'} or ""
+			return wd._egenskap{'referanser','nåværende',qid,'P1082'} or ""
+
 		else
 			return ""
 		end
 	else
-		return tonumber(wd._egenskap{'rå','nåværende','P1082'}).. wd._referanser{'nåværende','enkel','P1082'}  or ""
+		return wd._egenskap{'referanser','nåværende','P1082'} or ""
 	end
 end
 
@@ -89,10 +90,19 @@ local function sorted_iter(t)
   return fin
 end
 
+function containsValueFylke(value)
+    return data['fylke'][value] ~= nil
+end
+
 function p.tabell(frame)
 	local args = getArgs(frame)
-	local fylkenr = tonumber(args[1])
+	local fylkenr = tonumber(args[1]) or 0
 	local row = ''
+	
+	if containsValueFylke == nil then
+		error("Not a valid fylkenummer")
+	end
+	
 	local tbl = mw.html.create('table')
 	tbl
 		:addClass('wikitable sortable')
@@ -241,7 +251,8 @@ function p.main(frame)
 			end
 		end
 	else  
-		error("Not a valid kommunenummer in the list")
+		return "utdatert"
+		--error("Not a valid kommunenummer in the list")
 	end 
 	
 
