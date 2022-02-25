@@ -5,23 +5,26 @@ import json
 from pywikibot.data.sparql import SparqlQuery
 
 """
-This is a script to add population data for municipalities of Norway on Wikidata.
+This is a script to add population data for municipalities of Norway.
 
 1. Download population for a given year from: https://www.ssb.no/statbank/table/07459/ select all the municipalities.
 2. Press "Lagre data som..." -> "JSON-stat (json)" -> "Lagre".
 3. Add the file in the same directory as this script.
 4. Change the variable 'file_name_ssb' to the same name as your file from SSB.
-5. This script is made for 2021 data so, make the following changes for a new year (need adjustments for previous years):
-    1) Change query in variable 'query_municipality' to FILTER on a new year like (.."2022-01-01...).
+5. This script is made for 2022 data so, make the follwing chagnes for a new year:
+    1) Change query in variable 'query_municipality' to FILTER on a new year like (.."2023-01-01...).
     2) Change the variable 'year_adding' to correct year you are adding.
-    3) Change the following line date 'dateCre_ref = pywikibot.WbTime(year=2021, month=2, day=23)' with the value from 'updated' in the JSON file.
-    4) Change the link to your bot request in variable 'test_edit'. When test edits is done just change it to = ''.
-    5) Also when the test edit is done, remove the range ([:50]) on the FOR loop.
-    
-# https://w.wiki/4b$x
+    3) Change the following line date 'dateCre_ref = pywikibot.WbTime(year=year_adding, month=2, day=23)' with the value from 'updated' in the JSON file.
+
+EXTRA:
+IF TEST EDITS:
+1. Set variable "test_edit" with your bot request, if not a test edit set it to a empty string
+2. Change "for val in xml['results']['bindings']:" to "for val in xml['results']['bindings'][:50]:" for 50 test edit.
+
+# https://w.wiki/4Z4Z
 """
-file_name_ssb = '07459_20211222-132800.json'
-year_adding = 2021
+file_name_ssb = '07459_20220224-190529.json'
+year_adding = 2022
 test_edit = '[[Wikidata:Requests for permissions/Bot/IngeniousBot 2|Test edit]]: '
 
 query_municipality = """
@@ -31,7 +34,7 @@ SELECT DISTINCT ?item ?value WHERE {
     p:P1082 _:b30.
   _:b30 pq:P585 ?pointintime;
     rdf:type wikibase:BestRank.
-  FILTER(?pointintime != "2021-01-01T00:00:00Z"^^xsd:dateTime)
+  FILTER(?pointintime != "2022-01-01T00:00:00Z"^^xsd:dateTime)
 }
 """
 wikiquery = SparqlQuery()
@@ -59,7 +62,7 @@ f.close()
 site = pywikibot.Site("wikidata", "wikidata")
 repo = site.data_repository()
 
-for val in xml['results']['bindings'][:50]:
+for val in xml['results']['bindings']:
 
     has_pop_for_year = False
     wd_item = val['item']['value'].rsplit('/', 1)[1]
@@ -77,7 +80,7 @@ for val in xml['results']['bindings'][:50]:
                 for qual in claim.qualifiers:  # Checks if the population already has data for a given year
                     if u'P585' in qual:
                         for value in claim.qualifiers[qual]:
-                            if value.target_equals(pywikibot.WbTime(year=year_adding, month=1, day=1)):
+                            if value.target_equals(pywikibot.WbTime(site=repo, year=year_adding, month=1, day=1)):
                                 has_pop_for_year = True
 
                 if claim.rank == "preferred" and has_pop_for_year == False:
@@ -100,7 +103,7 @@ for val in xml['results']['bindings'][:50]:
 
         # QUALIFIER
         point_it = pywikibot.Claim(repo, u'P585', is_qualifier=True)  # point in time (P585). Data type: Point in time
-        dateCre = pywikibot.WbTime(site=repo, year=year_adding, month=1, day=1)  # January 1, 2021
+        dateCre = pywikibot.WbTime(site=repo, year=year_adding, month=1, day=1)  # January 1, 20XX
         point_it.setTarget(dateCre)  # Inserting value
 
         quantity_claim.addQualifier(point_it,
@@ -129,7 +132,7 @@ for val in xml['results']['bindings'][:50]:
         publisher_ref.setTarget(publisher_target)
 
         publication_ref = pywikibot.Claim(repo, u'P577')  # publication date (P577). Data type: Point in time
-        dateCre_ref = pywikibot.WbTime(site=repo, year=2021, month=2, day=23)  # 23.02.2021
+        dateCre_ref = pywikibot.WbTime(site=repo, year=year_adding, month=2, day=24)  # 24.02.2022
         publication_ref.setTarget(dateCre_ref)  # Inserting value
 
         quantity_claim.addSources([title_ref, ref_url, publisher_ref, publication_ref],
